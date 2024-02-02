@@ -35,6 +35,21 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             })
     }
 
+    const loginWithGoogle = async ({ setErrors, code }) => {
+        await csrf()
+
+        setErrors([])
+
+        axios
+            .get(`/auth/callback?code=${code}`)
+            .then(() => mutate())
+            .catch(error => {
+                router.push('/login')
+
+                setErrors(error.response.data.errors)
+            })
+    }
+
     const login = async ({ setErrors, setStatus, ...props }) => {
         await csrf()
 
@@ -114,6 +129,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         user,
         register,
         login,
+        loginWithGoogle,
         forgotPassword,
         resetPassword,
         resendEmailVerification,
