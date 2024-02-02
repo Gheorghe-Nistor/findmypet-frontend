@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import axios from '@/lib/axios'
 import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
 
 const Login = () => {
@@ -41,6 +42,12 @@ const Login = () => {
             remember: shouldRemember,
             setErrors,
             setStatus,
+        })
+    }
+
+    const handleGoogleAuthentication = () => {
+        axios.get('/auth/redirect').then(res => {
+            router.replace(res.data)
         })
     }
 
@@ -79,10 +86,7 @@ const Login = () => {
                         autoComplete="current-password"
                     />
 
-                    <InputError
-                        messages={errors.password}
-                        className="mt-2"
-                    />
+                    <InputError messages={errors.password} className="mt-2" />
                 </div>
 
                 {/* Remember Me */}
@@ -116,6 +120,15 @@ const Login = () => {
                     <Button className="ml-3">Login</Button>
                 </div>
             </form>
+
+            <div className="mt-4">
+                <Button
+                    onClick={() => handleGoogleAuthentication()}
+                    isFlex
+                    className="w-full inline-block bg-red-500 hover:bg-red-400 active:bg-red-900 focus:outline-none focus:border-red-900 focus:ring ring-red-300">
+                    Login with google social provider
+                </Button>
+            </div>
         </>
     )
 }
