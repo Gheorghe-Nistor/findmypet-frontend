@@ -1,12 +1,12 @@
 import '@/app/global.css'
 
 export const metadata = {
-    title: 'Laravel',
+    title: 'FindMyPet',
 }
 const RootLayout = ({ children }) => {
     return (
         <html lang="en">
-            <body className="antialiased">{children}</body>
+            <body className="font-sans bg-gray-900 text-white">{children}</body>
         </html>
     )
 }

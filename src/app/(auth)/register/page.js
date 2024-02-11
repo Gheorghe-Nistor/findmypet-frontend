@@ -86,9 +86,7 @@ const Page = () => {
 
             {/* Confirm Password */}
             <div className="mt-4">
-                <Label htmlFor="passwordConfirmation">
-                    Confirm Password
-                </Label>
+                <Label htmlFor="passwordConfirmation">Confirm Password</Label>
 
                 <Input
                     id="passwordConfirmation"
@@ -107,10 +105,10 @@ const Page = () => {
                 />
             </div>
 
-            <div className="flex items-center justify-end mt-4">
+            <div className="flex flex-col gap-3 items-center justify-center mt-4">
                 <Link
                     href="/login"
-                    className="underline text-sm text-gray-600 hover:text-gray-900">
+                    className="underline text-sm  hover:text-gray-300">
                     Already registered?
                 </Link>
 
