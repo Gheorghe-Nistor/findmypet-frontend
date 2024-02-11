@@ -4,7 +4,7 @@ import { useAuth } from '@/hooks/auth'
 import Navigation from '@/app/(app)/Navigation'
 import Loading from '@/app/(app)/Loading'
 
-const AppLayout = ({ children, header }) => {
+const AppLayout = ({ children }) => {
     const { user } = useAuth({ middleware: 'auth' })
 
     if (!user) {
@@ -12,16 +12,19 @@ const AppLayout = ({ children, header }) => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-900">
             <Navigation user={user} />
-
-            <header className="bg-white shadow">
-                <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {header}
+            <main>
+                <div className="py-10">
+                    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div className="overflow-hidden shadow-sm sm:rounded-lg">
+                            <div className="p-6 text-white bg-gray-600">
+                                {children}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </header>
-
-            <main>{children}</main>
+            </main>
         </div>
     )
 }
