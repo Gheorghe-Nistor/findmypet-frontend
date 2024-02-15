@@ -1,23 +1,21 @@
 import Link from 'next/link'
-import AuthCard from '@/app/(auth)/AuthCard'
 import ApplicationLogo from '@/components/ApplicationLogo'
 
 export const metadata = {
-    title: 'Laravel',
+    title: 'FindMyPet',
 }
 
 const Layout = ({ children }) => {
     return (
-        <div>
-            <div className="font-sans text-gray-900 antialiased">
-                <AuthCard
-                    logo={
-                        <Link href="/">
-                            <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                        </Link>
-                    }>
-                    {children}
-                </AuthCard>
+        <div className="min-h-screen flex flex-col justify-center items-center font-sans bg-gray-900 text-white">
+            <div>
+                <Link href="/">
+                    <ApplicationLogo />
+                </Link>
+            </div>
+
+            <div className="w-full max-w-md mt-6 px-6 py-4 bg-gray-800 overflow-hidden rounded-lg">
+                {children}
             </div>
         </div>
     )

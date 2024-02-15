@@ -16,7 +16,7 @@ const Login = () => {
 
     const { login } = useAuth({
         middleware: 'guest',
-        redirectIfAuthenticated: '/dashboard',
+        redirectIfAuthenticated: '/home',
     })
 
     const [email, setEmail] = useState('')
@@ -98,37 +98,34 @@ const Login = () => {
                             id="remember_me"
                             type="checkbox"
                             name="remember"
-                            className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="rounded border-gray-300 text-blue-500 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                             onChange={event =>
                                 setShouldRemember(event.target.checked)
                             }
                         />
-
-                        <span className="ml-2 text-sm text-gray-600">
+                        <span className="ml-2 text-sm text-white">
                             Remember me
                         </span>
                     </label>
                 </div>
-
-                <div className="flex items-center justify-end mt-4">
+                {/* Login */}
+                <div className="flex gap-y-3 flex-col items-center justify-center mt-2">
+                    <Button>Login</Button>
+                    <Button onClick={() => handleGoogleAuthentication()} isFlex>
+                        Login with Google
+                    </Button>
+                    <Link
+                        href="/register"
+                        className="underline text-sm hover:text-gray-300">
+                        You don't have an account yet?
+                    </Link>
                     <Link
                         href="/forgot-password"
-                        className="underline text-sm text-gray-600 hover:text-gray-900">
+                        className="underline text-sm hover:text-gray-300">
                         Forgot your password?
                     </Link>
-
-                    <Button className="ml-3">Login</Button>
                 </div>
             </form>
-
-            <div className="mt-4">
-                <Button
-                    onClick={() => handleGoogleAuthentication()}
-                    isFlex
-                    className="w-full inline-block bg-red-500 hover:bg-red-400 active:bg-red-900 focus:outline-none focus:border-red-900 focus:ring ring-red-300">
-                    Login with google social provider
-                </Button>
-            </div>
         </>
     )
 }

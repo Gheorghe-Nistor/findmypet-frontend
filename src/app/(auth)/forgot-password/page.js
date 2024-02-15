@@ -11,7 +11,7 @@ import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
 const Page = () => {
     const { forgotPassword } = useAuth({
         middleware: 'guest',
-        redirectIfAuthenticated: '/dashboard',
+        redirectIfAuthenticated: '/home',
     })
 
     const [email, setEmail] = useState('')
@@ -26,7 +26,7 @@ const Page = () => {
 
     return (
         <>
-            <div className="mb-4 text-sm text-gray-600">
+            <div className="mb-4 text-sm">
                 Forgot your password? No problem. Just let us know your email
                 email address and we will email you a password reset link that
                 that will allow you to choose a new one.
