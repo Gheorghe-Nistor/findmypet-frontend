@@ -18,7 +18,7 @@ const AppLayout = ({ children }) => {
                 <div className="py-10">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="overflow-hidden shadow-sm sm:rounded-lg">
-                            <div className="p-6 text-white bg-gray-600">
+                            <div className="p-6 text-white bg-gray-500 bg-opacity-50">
                                 {children}
                             </div>
                         </div>
