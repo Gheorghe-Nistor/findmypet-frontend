@@ -63,17 +63,37 @@ const Direct = () => {
                             <Link href={`/direct/${directStructure.sender.id}`}>
                                 <li key={directStructure.last_message_id} className="bg-gray-900 relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-700 sm:px-6">
                                     <div className="flex min-w-0 gap-x-4">
-                                        <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={directStructure.sender.avatar} alt="" />
+                                        {directStructure.sender.avatar && !!!directStructure.sender.deleted_at ? (
+                                            <img src={directStructure.sender.avatar}
+                                                 className="h-12 w-12 flex-none rounded-full bg-gray-50" alt="profile picture" srcSet="" />
+                                        ) : (
+                                            <svg
+                                                className="h-12 w-12 flex-none rounded-full bg-gray-200"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                />
+                                            </svg>
+                                        )}
                                         <div className="min-w-0 flex-auto">
                                             <p className="text-sm font-semibold leading-6 text-gray-100">
                                                 <span className="absolute inset-x-0 -top-px bottom-0" />
-                                                {directStructure.sender.name}
+                                                {!!!directStructure.sender.deleted_at ? directStructure.sender.name : 'Deactivated account'}
                                             </p>
-                                            <p className="mt-1 flex text-xs leading-5 text-gray-500">
-                                                <span className="relative truncate hover:underline">
-                                                    {directStructure.sender.email}
-                                                </span>
-                                            </p>
+                                            {
+                                                !!!directStructure.sender.deleted_at &&
+                                                <p className="mt-1 flex text-xs leading-5 text-gray-500">
+                                                    <span className="relative truncate hover:underline">
+                                                        {directStructure.sender.email}
+                                                    </span>
+                                                </p>
+                                            }
                                         </div>
                                     </div>
                                     <div className="flex shrink-0 items-center gap-x-4">
