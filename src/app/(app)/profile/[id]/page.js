@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import FileUploader from '@/components/FileUploader'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/auth'
 import Loading from '@/app/(app)/Loading'
 import Link from 'next/link'
@@ -13,6 +13,7 @@ import useSWR from 'swr'
 const Profile = () => {
     const { user, mutate: authMutator } = useAuth({ middleware: 'auth' })
     const params = useParams();
+    const router = useRouter();
     const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -52,7 +53,11 @@ const Profile = () => {
         });
     };
 
+    const forceDelete = async (user) => {
+        await axios.delete(`/api/users/forceDelete/${user}`)
 
+        router.push('/home')
+    }
 
     const handleSubmit = (e, user, formData, mutate) => {
         e.preventDefault();
@@ -147,6 +152,7 @@ const Profile = () => {
                                 {
                                     !!user?.is_admin && (<>{
                                         otherUser?.deleted_at != null ? (
+                                            <>
                                             <button
                                                 className="ml-1 bg-gradient-to-r from-emerald-500 to-emerald-500 hover:from-emerald-600 hover:to-green-600 text-white font-bold py-2 px-4 rounded-md flex items-center shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                                                 onClick={async () => {
@@ -155,6 +161,15 @@ const Profile = () => {
                                             >
                                                 Restore
                                             </button>
+                                            <button
+                                                className="ml-1 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-2 px-4 rounded-md flex items-center shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                                onClick={async () => {
+                                                    await forceDelete(otherUser?.id)
+                                                }}
+                                            >
+                                                Delete Forever
+                                            </button>
+                                            </>
                                         )
                                         : (
                                             <button
