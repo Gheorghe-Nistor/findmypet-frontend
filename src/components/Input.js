@@ -1,7 +1,7 @@
 const Input = ({ disabled = false, className, ...props }) => (
     <input
         disabled={disabled}
-        className={`${className} text-black border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-md shadow-sm`}
+        className={`${className} text-black bg-white mt-2 p-1 border rounded leading-tight w-full block appearance-none prounded focus:outline-none focus:shadow-outline`}
         {...props}
     />
 )

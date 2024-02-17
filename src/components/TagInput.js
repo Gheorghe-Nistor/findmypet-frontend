@@ -24,10 +24,11 @@ const TagInput = ({ tags, setTags }) => {
                 {tags.map((tag, index) => (
                     <div
                         key={index}
-                        className="flex items-center gap-2 text-black bg-gray-200 px-2 py-1 rounded-xl">
+                        className="flex items-center gap-2 px-2 py-1 rounded-l  bg-orange-600 hover:bg-orange-700 focus:bg-orange-900">
                         {tag}
                         <button
-                            className="text-black hover:text-red-500"
+                            type="button"
+                            className="text-white hover:text-black"
                             onClick={() => removeTag(index)}>
                             &times;
                         </button>
@@ -35,7 +36,7 @@ const TagInput = ({ tags, setTags }) => {
                 ))}
             </div>
             <Input
-                className="mt-2 p-1 border rounded text-black w-2/5"
+                className="mt-2 p-1 border rounded text-black w-full"
                 type="text"
                 value={input}
                 onChange={e => setInput(e.target.value)}

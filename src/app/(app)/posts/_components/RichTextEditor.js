@@ -5,7 +5,7 @@ import { Editor } from '@tinymce/tinymce-react'
 export default function RichTextEditor({ content, onContentChange }) {
     return (
         <Editor
-            apiKey="z4bprtbdkjh1v9eivxol3izwizwgo410e5ktjo5qwzh6a625"
+            apiKey={process.env.NEXT_PUBLIC_TINY_MCE}
             init={{
                 plugins:
                     'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
