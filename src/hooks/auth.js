@@ -127,6 +127,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     return {
         user,
+        mutate,
         register,
         login,
         loginWithGoogle,

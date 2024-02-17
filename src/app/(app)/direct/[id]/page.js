@@ -1,15 +1,18 @@
 'use client'
 
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '@/hooks/auth'
 import Loading from '@/app/(app)/Loading'
 import { useDirect } from '@/hooks/direct'
 import echo from '@/lib/echo'
+import useSWR from 'swr'
+import axios from '@/lib/axios'
 
 
 const DirectChat = () => {
     const params = useParams()
+    const router = useRouter();
     const [messages, setMessages] = useState(null);
     const [inputText, setInputText] = useState('');
     const messagesEndRef = useRef(null);
@@ -19,9 +22,16 @@ const DirectChat = () => {
 
     const { fetchChatMessagesWithUser, sendMessageToDirectMessageUser, updateSeenStatusWithUser } = useDirect()
     const { user } = useAuth({ middleware: 'auth' })
+
     if (!user) {
         return <Loading />
     }
+
+    useEffect(() => {
+        if (user?.id === Number(params.id)) {
+            router.push('/direct');
+        }
+    }, [user, params, router]);
 
     const scrollToBottom = () => {
         messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -95,10 +105,10 @@ const DirectChat = () => {
                             className={`p-3 ${msg.sender_id !== user?.id ? 'self-start' : 'self-end'}`}
                         >
                             <div className={`flex flex-col ${msg.sender_id !== user?.id ? 'items-start' : 'items-end'}`}>
-                                <small className="text-sm text-gray-300 text-center">{msg.sender.name} {msg.sender_id === user?.id && '(You)'}</small>
+                                <small className="text-sm text-gray-300 text-center">{!!msg.sender.deleted_at && msg.sender_id !== user?.id ? 'Deactivated user' : msg.sender.name} {msg.sender_id === user?.id && '(You)'}</small>
                                 <div className="flex flex-row items-center">
                                     {msg.sender_id !== user?.id &&
-                                        (<>{ msg.sender.avatar ? (
+                                        (<>{ msg.sender.avatar && !!!msg.sender.deleted_at ? (
                                         <img
                                             className="h-7 w-7 fill-current rounded-full"
                                             src={msg.sender.avatar}
@@ -158,14 +168,14 @@ const DirectChat = () => {
                     <input
                         type="text"
                         value={inputText}
-                        onKeyDown={handleKeyDown}
+                        onKeyDown={async (e) => { await handleKeyDown(e) }}
                         onChange={(e) => setInputText(e.target.value)}
                         className="flex-grow border border-gray-300 rounded-full py-2 px-4 mr-4 text-black"
                         placeholder="Type your message..."
                         required
                     />
                     <button
-                        onClick={handleSend}
+                        onClick={async () => { await handleSend() }}
                         className={`text-white rounded-full px-4 py-2 font-semibold hover:bg-blue-600 ${disabled ? 'bg-blue-300' : 'bg-blue-500'}`}
                         disabled={disabled}
                     >
