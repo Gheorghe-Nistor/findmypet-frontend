@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
+    "@react-google-maps/api": "^2.19.3",
+    "@tinymce/tinymce-react": "^4.3.2",
     "axios": "^0.21.1",
     "laravel-echo": "^1.15.3",
     "next": "^14.0.3",
