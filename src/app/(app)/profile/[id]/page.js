@@ -24,6 +24,9 @@ const Profile = () => {
         axios
             .get(`/api/user/${params.id}`)
             .then(res => res.data)
+            .catch(() => {
+                router.push('/home')
+            })
     )
 
     useEffect(() => {
