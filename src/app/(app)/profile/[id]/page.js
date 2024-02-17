@@ -26,7 +26,7 @@ const Profile = () => {
                 .get(`/api/user/${params.id}`)
                 .then(res => res.data)
                 .catch(() => {
-                    router.push('/home')
+                    router.push('/dashboard')
                 }),
     )
 
@@ -60,7 +60,7 @@ const Profile = () => {
     const forceDelete = async user => {
         await axios.delete(`/api/users/forceDelete/${user}`)
 
-        router.push('/home')
+        router.push('/dashboard')
     }
 
     const handleSubmit = (e, user, formData, mutate) => {

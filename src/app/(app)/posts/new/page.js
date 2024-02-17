@@ -2,10 +2,9 @@
 
 import { useState } from 'react'
 
-import Image from 'next/image'
-import RichTextEditor from '@/app/(app)/posts/_components/RichTextEditor'
-import LocationPicker from '@/app/(app)/posts/_components/LocationPicker'
-import TagInput from '@/components/TagInput'
+import TextEditor from '@/app/(app)/posts/_components/TextEditor'
+import LocationPicker from '@/app/(app)/posts/_components/map/LocationPicker'
+import { TagInput } from '@/components/Tags'
 import Button from '@/components/Button'
 import FlexCenterWrapper from '@/components/FlexCenterWrapper'
 import Input from '@/components/Input'
@@ -28,6 +27,7 @@ const NewPost = () => {
     }
 
     const handleLocationSelect = location => {
+        console.log(location)
         setSelectedLocation(location)
     }
 
@@ -35,6 +35,7 @@ const NewPost = () => {
         e.preventDefault()
         const post = {
             title: title,
+            type: selectedType,
             description: editorContent,
             lat: selectedLocation.lat,
             lang: selectedLocation.lng,
@@ -50,7 +51,7 @@ const NewPost = () => {
     return (
         <FlexCenterWrapper>
             <FlexCenterWrapper className="mb-10 w-2/3">
-                <Image src="/dog.png" width={150} height={150} alt="Logo" />
+                <img src="/dog.png" width={150} height={150} alt="Logo" />
                 <h1 className="text-2xl font-bold mt-2">
                     Lost or found a pet? Report here to help them find their way
                     home
@@ -118,7 +119,7 @@ const NewPost = () => {
                 </LabeledFlexWrapper>
 
                 <LabeledFlexWrapper label="Description">
-                    <RichTextEditor
+                    <TextEditor
                         content={editorContent}
                         onContentChange={handleEditorChange}
                     />

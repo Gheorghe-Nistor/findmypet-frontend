@@ -47,4 +47,17 @@ const TagInput = ({ tags, setTags }) => {
     )
 }
 
-export default TagInput
+const TagOutput = ({ tags }) => {
+    return (
+        <div className="flex flex-wrap gap-2">
+            {tags.map((tag, index) => (
+                <div
+                    key={index}
+                    className="flex items-center gap-2 px-2 py-1 rounded-l  bg-orange-600 hover:bg-orange-700 focus:bg-orange-900">
+                    {tag}
+                </div>
+            ))}
+        </div>
+    )
+}
+export { TagInput, TagOutput }

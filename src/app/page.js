@@ -9,7 +9,7 @@ import { redirect } from 'next/navigation'
 const Home = () => {
     const { user } = useAuth({ middleware: 'guest' })
     if (user) {
-        redirect('/home')
+        redirect('/dashboard')
     }
     return (
         <div className="flex justify-center items-center min-h-screen">

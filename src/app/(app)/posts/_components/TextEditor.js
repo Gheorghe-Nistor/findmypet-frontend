@@ -2,7 +2,7 @@
 
 import { Editor } from '@tinymce/tinymce-react'
 
-export default function RichTextEditor({ content, onContentChange }) {
+export default function TextEditor({ content, onContentChange }) {
     return (
         <Editor
             apiKey={process.env.NEXT_PUBLIC_TINY_MCE}
