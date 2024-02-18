@@ -32,13 +32,13 @@ const PostsMap = ({ posts }) => {
                 center={
                     posts[0] && {
                         lat: posts[0].lat,
-                        lng: posts[0].lang,
+                        lng: posts[0].lng,
                     }
                 }>
                 {posts.map(post => (
                     <Marker
                         key={post.id}
-                        position={{ lat: post.lat, lng: post.lang }}
+                        position={{ lat: post.lat, lng: post.lng }}
                         onClick={() => handleMarkerClick(post)}
                     />
                 ))}

@@ -11,25 +11,29 @@ import FlexCenterWrapper from '@/components/FlexCenterWrapper'
 import LabeledFlexWrapper from '@/components/LabeledFlexWrapper'
 import Link from 'next/link'
 
-const LargePost = ({ post, onDeletePost }) => {
+const LargePost = ({ post, user, onDeletePost }) => {
     return (
         <div>
             <div className="flex justify-between">
                 {post?.type && <TypeTag type={post.type} />}
-                <Link href={`/profile/${post.userId}`}>
+                <Link href={`/profile/${post.user.id}`}>
                     <div className="flex gap-1">
                         <FontAwesomeIcon
                             icon={faUserCircle}
                             className="text-xl text-white"
                         />
-                        {post.username}
+                        {post.user.name}
                     </div>
                 </Link>
-                <Button
-                    className="mt-1.5 mx-1 bg-red-500 hover:bg-red-600 focus:bg-red-900"
-                    onClick={() => onDeletePost()}>
-                    Delete post
-                </Button>
+                {
+                    post.user.id === user?.id && (
+                    <Button
+                        className="mt-1.5 mx-1 bg-red-500 hover:bg-red-600 focus:bg-red-900"
+                        onClick={() => onDeletePost()}>
+                        Delete post
+                    </Button>
+                    )
+                }
             </div>
             <FlexCenterWrapper className="gap-5">
                 <FlexCenterWrapper className="mb-10 w-2/3">
@@ -38,27 +42,27 @@ const LargePost = ({ post, onDeletePost }) => {
                             {post.title}
                         </h1>
                     )}
-                    {post?.reward && <Reward value={post.reward} />}
+                    {post?.reward !== 0 && <Reward value={post.reward} />}
                     <div className="h-0.5 rounded-full w-full bg-yellow-500 mt-1"></div>
                 </FlexCenterWrapper>
 
-                {post?.images && (
-                    <ImageCarousel className="w-[500px]" images={post.images} />
+                {JSON.parse(post?.images).length !== 0 && (
+                    <ImageCarousel className="w-[500px]" images={JSON.parse(post.images)} />
                 )}
 
                 {post?.description && (
                     <DisplayContent content={post.description} />
                 )}
 
-                {post?.lat && post?.lang && (
+                {post?.lat && post?.lng && (
                     <LabeledFlexWrapper label="Last known location">
                         <DisplayLocation
-                            location={{ lat: post.lat, lng: post.lang }}
+                            location={{ lat: post.lat, lng: post.lng }}
                         />
                     </LabeledFlexWrapper>
                 )}
 
-                {post?.tags && <TagOutput tags={post.tags} />}
+                {JSON.parse(post?.tags).length !== 0 && <TagOutput tags={JSON.parse(post.tags)} />}
             </FlexCenterWrapper>
         </div>
     )

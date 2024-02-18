@@ -15,10 +15,10 @@ const PostModal = ({ isOpen, onClose, post }) => {
                     {post?.title && (
                         <h1 className="text-xl font-bold">{post.title}</h1>
                     )}
-                    {post?.reward && <Reward value={post.reward} />}
+                    {post?.reward != 0 && <Reward value={post.reward} />}
                     {post?.images && (
                         <img
-                            src={post.images[0]}
+                            src={JSON.parse(post.images)[0]}
                             width="300px"
                             alt="Misssing pet"
                         />

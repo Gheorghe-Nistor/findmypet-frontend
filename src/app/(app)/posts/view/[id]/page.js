@@ -1,14 +1,21 @@
 'use client'
 
 import { useAuth } from '@/hooks/auth'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import LargePost from '@/app/(app)/posts/_components/post/LargePost'
 import LikeButton from '@/app/(app)/posts/_components/LikeButton'
 import AddComment from '@/app/(app)/posts/_components/AddComment'
 import Comment from '@/app/(app)/posts/_components/Comment'
 import Loading from '@/app/(app)/Loading'
+import { usePost } from '@/hooks/post'
+import { useParams } from 'next/navigation'
 
 const ViewPost = () => {
+
+    const { fetchPostData } = usePost();
+    const params = useParams();
+    const [post, setPost] = useState(null);
+
     const Mocks = {
         Post: {
             userId: 1,
@@ -62,7 +69,18 @@ const ViewPost = () => {
         setComments([...comments, newComment])
     }
 
-    if (!user) {
+    useEffect(() => {
+        if (post === null) {
+            const fetchPost = async () => {
+                await fetchPostData({ postId: params.id, setPost })
+            }
+
+            fetchPost()
+                .catch(console.error)
+        }
+    }, [])
+
+    if (!post || !user) {
         return <Loading />
     }
 
@@ -72,30 +90,35 @@ const ViewPost = () => {
     }
 
     return (
-        <div>
-            <div className="w-auto mx-auto bg-[#20354b] rounded-2xl px-8 py-6 shadow-lg mb-5">
-                <LargePost post={Mocks.Post} onDeletePost={handleDeletePost} />
-                <LikeButton
-                    initialLiked={Mocks.Like.initialLiked}
-                    initialLikes={Mocks.Like.initialLikes}
-                    onLikeToggle={handleLikeToggle}
-                />
-            </div>
-
+        <>
+        {
+            post && user &&
             <div>
-                <AddComment onSubmit={handleCommentSubmit} />
-            </div>
-
-            <div className="space-y-4 p-4">
-                {comments.map(comment => (
-                    <Comment
-                        key={comment.id}
-                        username={comment.username}
-                        text={comment.text}
+                <div className="w-auto mx-auto bg-[#20354b] rounded-2xl px-8 py-6 shadow-lg mb-5">
+                    <LargePost post={post} user={user} onDeletePost={handleDeletePost} />
+                    <LikeButton
+                        initialLiked={Mocks.Like.initialLiked}
+                        initialLikes={Mocks.Like.initialLikes}
+                        onLikeToggle={handleLikeToggle}
                     />
-                ))}
+                </div>
+
+                <div>
+                    <AddComment onSubmit={handleCommentSubmit} />
+                </div>
+
+                <div className="space-y-4 p-4">
+                    {comments.map(comment => (
+                        <Comment
+                            key={comment.id}
+                            username={comment.username}
+                            text={comment.text}
+                        />
+                    ))}
+                </div>
             </div>
-        </div>
+        }
+        </>
     )
 }
 

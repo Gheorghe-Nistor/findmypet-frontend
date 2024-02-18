@@ -12,8 +12,10 @@ import TypeSelector from '@/app/(app)/posts/_components/TypeSelector'
 import LabeledFlexWrapper from '@/components/LabeledFlexWrapper'
 import FileUploader from '@/components/FileUploader'
 import axios from '@/lib/axios'
+import { useRouter } from 'next/navigation'
 
 const NewPost = () => {
+    const routes = useRouter()
     const [title, setTitle] = useState('')
     const [selectedType, setSelectedType] = useState('REQUEST')
     const [tags, setTags] = useState([])
@@ -33,17 +35,24 @@ const NewPost = () => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        const post = {
-            title: title,
-            type: selectedType,
-            description: editorContent,
-            lat: selectedLocation.lat,
-            lang: selectedLocation.lng,
-            reward,
-            tags,
-        }
-        console.log(post)
-        axios.post(`/api/posts`, post).catch(error => {
+
+        const formData = new FormData()
+        formData.append('title', title)
+        formData.append('type', selectedType)
+        formData.append('description', editorContent)
+        formData.append('lat', selectedLocation.lat)
+        formData.append('lang', selectedLocation.lng)
+        formData.append('reward', reward)
+        tags.forEach(tag => formData.append('tags[]', tag))
+        files.forEach(file => formData.append('images[]', file))
+
+        axios.post(`/api/posts`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        })
+        .then(() => routes.push('/dashboard'))
+        .catch(error => {
             console.error('Error:', error)
         })
     }
