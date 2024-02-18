@@ -11,7 +11,7 @@ import { useState } from 'react'
 const Page = () => {
     const { register } = useAuth({
         middleware: 'guest',
-        redirectIfAuthenticated: '/home',
+        redirectIfAuthenticated: '/dashboard',
     })
 
     const [name, setName] = useState('')
