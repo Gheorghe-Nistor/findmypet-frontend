@@ -46,7 +46,7 @@ const LargePost = ({ post, user, onDeletePost }) => {
                     <div className="h-0.5 rounded-full w-full bg-yellow-500 mt-1"></div>
                 </FlexCenterWrapper>
 
-                {JSON.parse(post?.images).length !== 0 && (
+                {!!JSON.parse(post?.images) && (
                     <ImageCarousel className="w-[500px]" images={JSON.parse(post.images)} />
                 )}
 
@@ -62,7 +62,7 @@ const LargePost = ({ post, user, onDeletePost }) => {
                     </LabeledFlexWrapper>
                 )}
 
-                {JSON.parse(post?.tags).length !== 0 && <TagOutput tags={JSON.parse(post.tags)} />}
+                {!!JSON.parse(post?.tags) && <TagOutput tags={JSON.parse(post.tags)} />}
             </FlexCenterWrapper>
         </div>
     )

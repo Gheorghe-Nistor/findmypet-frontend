@@ -41,9 +41,18 @@ const Navigation = ({ user }) => {
                     {/* Settings Dropdown */}
                     <div className="hidden sm:flex sm:items-center sm:ml-6">
                         <div className="mx-2">
+                            <Link className="flex" href="/search">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     strokeWidth="1.5" stroke="currentColor" className="h-5 w-5 rounded-full text-white">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                          d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                </svg>
+                            </Link>
+                        </div>
+                        <div className="mx-2">
                             <Link className="flex" href="/direct">
                                 <svg
-                                    className="h-5 w-5 text-white rounded-full text-white"
+                                    className="h-5 w-5 rounded-full text-white"
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
@@ -75,7 +84,8 @@ const Navigation = ({ user }) => {
                             align="right"
                             width="48"
                             trigger={
-                                <button className="flex items-center text-sm font-medium text-white hover:text-gray-500 focus:outline-none transition duration-150 ease-in-out">
+                                <button
+                                    className="flex items-center text-sm font-medium text-white hover:text-gray-500 focus:outline-none transition duration-150 ease-in-out">
                                     <div className="mr-2">
                                         {user?.avatar ? (
                                             <img
@@ -102,12 +112,14 @@ const Navigation = ({ user }) => {
                                     <div className="font-bold">
                                         {user?.name}
                                         {!!user?.is_verified && (
-                                            <small className="mx-1 font-normal px-1 bg-blue-300 text-white rounded-md border-2 border-blue-400/50">
+                                            <small
+                                                className="mx-1 font-normal px-1 bg-blue-300 text-white rounded-md border-2 border-blue-400/50">
                                                 Verified
                                             </small>
                                         )}
                                         {user?.is_admin ? (
-                                            <small className="mx-1 font-normal px-1 bg-red-300 text-white rounded-md border-2 border-red-400/50">
+                                            <small
+                                                className="mx-1 font-normal px-1 bg-red-300 text-white rounded-md border-2 border-red-400/50">
                                                 Admin
                                             </small>
                                         ) : null}

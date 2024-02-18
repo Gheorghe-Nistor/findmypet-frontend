@@ -69,9 +69,9 @@ const Search = () => {
                     className="relative -ml-20 inline-flex items-center gap-x-1.5 bg-gray-700 rounded-full px-2 py-1.5 text-sm font-semibold text-gray-400 z-10 ring-inset ring-gray-700 hover:bg-gray-600"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                        <path fill-rule="evenodd"
+                        <path fillRule="evenodd"
                               d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-                              clip-rule="evenodd" />
+                              clipRule="evenodd" />
                     </svg>
 
                     Search
@@ -112,6 +112,8 @@ const Search = () => {
                                     role="list"
                                     className="divide-y divide-gray-800 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl"
                                 >
+                                    {
+                                        searchType === 'user' ? (<>
                                     {searchResults.map(searchResult => (
                                         <Link href={`/profile/${searchResult.id}`}>
                                             <li key={searchResult.id} className="bg-gray-900 relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-700 sm:px-6">
@@ -165,14 +167,46 @@ const Search = () => {
                                                     </div>
                                                 </div>
                                                 <div className="flex shrink-0 items-center gap-x-4">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                                                          stroke="currentColor" className="h-5 w-5 flex-none text-gray-400" aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                                     </svg>
                                                 </div>
                                             </li>
                                         </Link>
-                                    ))}
+                                    ))}</>) : (
+                                        <>
+                                            {searchResults.map(searchResult => (
+                                                <Link href={`/posts/view/${searchResult.id}`}>
+                                                    <li key={searchResult.id} className="bg-gray-900 relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-700 sm:px-6">
+                                                        <div className="flex min-w-0 gap-x-4">
+                                                            {!!JSON.parse(searchResult.images) && (
+                                                                <img src={JSON.parse(searchResult.images)[0]}
+                                                                     className="h-12 w-12 flex-none rounded-full bg-gray-50" alt="profile picture" srcSet="" />
+                                                            )}
+                                                            <div className="min-w-0 flex-auto">
+                                                                <p className="text-sm font-semibold leading-6 text-gray-100">
+                                                                    <span className="absolute inset-x-0 -top-px bottom-0" />
+                                                                    {searchResult.title}
+                                                                </p>
+                                                                <p className="mt-1 flex text-xs leading-5 text-gray-500">
+                                                            <span className="relative truncate hover:underline">
+                                                                Posted by: {searchResult.user.name} @ {searchResult.user.email}
+                                                            </span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex shrink-0 items-center gap-x-4">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
+                                                                 stroke="currentColor" className="h-5 w-5 flex-none text-gray-400" aria-hidden="true">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                                            </svg>
+                                                        </div>
+                                                    </li>
+                                                </Link>
+                                            ))}
+                                        </>)
+                                    }
                                 </ul>
                             )
                         }
