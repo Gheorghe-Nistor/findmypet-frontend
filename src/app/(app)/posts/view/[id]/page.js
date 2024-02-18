@@ -42,15 +42,6 @@ const ViewPost = () => {
         // TODO: like post
     }
 
-    const handleCommentSubmit = comment => {
-        const newComment = {
-            id: comments.length + 1,
-            username: user?.name,
-            text: comment,
-        }
-        setComments([...comments, newComment])
-    }
-
     useEffect(() => {
         if (post === null) {
             const fetchPost = async () => {
